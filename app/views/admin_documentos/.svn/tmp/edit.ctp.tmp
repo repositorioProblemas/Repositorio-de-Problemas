@@ -1,0 +1,114 @@
+<?php
+	echo $this->Html->script('https://www.google.com/jsapi');
+	echo $this->Html->script('piecharts');	
+	//pr($this->data);
+	$id = $this->data['Documento']['id_documento'];
+	$en_valid = ($this->data['InformacionDesafio']['confirmado'] == 1) ? true : false;		
+	$title = "Edit document";	
+	$this->viewVars['title_for_layout'] = $title;
+	$this->Html->addCrumb('Manage', '/manage/');
+	$this->Html->addCrumb(($en_valid ? 'Validated Documents' : 'Pending validation'), ($en_valid ? 'validados' : 'no_validados'));
+	$this->Html->addCrumb($title);
+?>
+
+<?php echo $this->Html->image('docs.png',array('class' => 'imgicon')) ; ?><h1 class="h1icon"><?php echo $title; ?></h1>
+<div class="clearicon"></div>
+
+<div class="adm-buttons">
+
+	<?php
+	// delete 
+	echo $this->Form->create(null, array('url' => '/admin_documentos/remove/'.$id));
+	echo $this->Form->end('Remove document');
+	
+	// (in)validate
+	$value = ($en_valid) ? 0 : 1;	
+	echo $this->Form->create(null, array('url' => '/admin_documentos/set_field/confirmado'.$id.'/'.$value));
+	echo $this->Form->end(($en_valid ? 'Invalidate' : 'Validate') . ' document');
+	
+	
+	?>
+</div>
+
+<div class="yui-g">
+	<div class="yui-u first">
+		<!-- basics -->
+		<div class="adm-edit-doc">
+			<?php
+				echo $this->Form->create(null, array('url' => '/admin_documentos/edit/' . $this->data['Documento']['id_documento']));
+				echo $this->Form->input('Documento.titulo', array(
+				  'label' => 'Title',
+				  'class' => 'edit'
+				));
+				echo "<div style='width:400px'>";
+				echo $this->Form->input('Documento.tags', array(
+				  'class' => 'edit'
+				));
+				echo "</div>";
+				echo $this->Form->input('Documento.texto', array(
+				  'label' => 'Content',
+				  'value' => stripslashes(str_replace('\n',"\n",$this->data['Documento']['texto'])),
+				  'rows' => 14,
+				  'cols' => 80,
+				));	
+			?>
+				<div class="created-by">
+					<span>Created by <?php echo $this->Text->autoLinkEmails($this->data['Usuario']['autor']); ?> on <?php echo $this->data['Documento']['created']; ?></span> 
+				</div>
+			<?php
+				//For each criterio mostrar estadísticas totales y permitir resetear.
+				echo $this->Form->end('Save and return');	
+			?>
+			<script type="text/javascript">
+				add_textboxlist("#DocumentoTags");
+			</script>
+		</div>
+	</div>
+	
+	
+	<div class="yui-u">
+		<div class="adm-expert-panel">
+			<!-- expert's panel -->
+			<h2>Expert Panel</h2>
+			<div class="adm-criteria" style="padding-top: 15px;">
+				<?php echo $this->Form->create(null, array('url' => '/admin_documentos/edit_select_criteria/'.$id, 'name' => 'select_criterio')); ?>
+				<span class="adm-opt">Select criteria: </span>
+				<?php			 
+					echo $this->Form->select('pregunta', $criterios_list, $criterios_n, array('empty' => false, 'onChange' => 'select_criterio.submit()'));			   
+				?>
+				</form>
+			</div>
+			<h3>Statistics</h3>
+			<script type="text/javascript">
+		      google.load("visualization", "1", {packages:["corechart"]});
+		      google.setOnLoadCallback(drawChart);
+		      function drawChart() {
+		        var data = new google.visualization.DataTable();
+		        data.addColumn('string', 'Task');
+		        data.addColumn('number', 'Hours per Day');
+		        data.addRows(2);
+		        data.setValue(0, 0, 'Yes');
+		        data.setValue(0, 1, 11);
+		        data.setValue(1, 0, 'No');
+		        data.setValue(1, 1, 2);
+		
+		        var chart = new google.visualization.PieChart(document.getElementById("chart_div"));
+		        chart.draw(data, {
+		        	width: 450, 
+		        	height: 300,		        	
+		        	colors: ['#003366', '#9999CC'], 
+		        	title: '<?php echo $criterios_list[$criterios_n]; ?>'});
+		      }
+		    </script>
+		
+		    <div id="chart_div"></div>
+			
+		</div>
+	</div>
+</div>
+
+
+
+
+
+

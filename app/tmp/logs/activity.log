@@ -1,0 +1,75 @@
+2011-06-21 02:23:55 Activity: User 2 has searched for: [avl]
+2011-06-21 02:24:07 Activity: User 2 has searched for: [avl binary]
+2011-06-21 02:24:19 Activity: User 2 has searched for: [avl,mergesort]
+2011-06-21 02:36:45 Activity: User 2 has searched for: [avl]
+2011-06-21 03:09:40 Activity: User Bolainas Burns (3) has logged in
+2011-06-21 03:11:19 Activity: User Cosme Fulanito (2) has logged in
+2011-06-21 03:11:48 Activity: User 5 created
+2011-06-21 03:11:58 Activity: User Nuevo Usuario (5) has logged in
+2011-06-21 03:30:57 Activity: User Cosme Fulanito (2) has logged in
+2011-06-21 03:31:20 Activity: Criteria "Otra pregunta mas" was added
+2011-06-21 03:32:25 Activity: Criteria 6 was removed
+2011-06-21 03:32:27 Activity: Criteria 5 was removed
+2011-06-21 03:32:50 Activity: Criteria "Another more question" was added
+2011-06-21 03:34:57 Activity: Criteria 7 was removed
+2011-06-21 03:35:32 Activity: Criteria "criteria" was added
+2011-06-21 03:38:57 Activity: Criteria 8 was removed
+2011-06-21 03:39:26 Activity: Criteria "pregunta" was added
+2011-06-21 04:17:24 Activity: User Nuevo Usuario (5) has logged in
+2011-06-21 04:24:25 Activity: Criteria 9 was removed
+2011-06-21 04:24:48 Activity: Criteria "criteria 1" was added
+2011-06-21 04:25:21 Activity: Criteria 1 was removed
+2011-06-21 04:25:38 Activity: Criteria "criteria 2" was added
+2011-06-21 04:31:31 Activity: User 5 created
+2011-06-21 04:33:14 Activity: User Nuevo Usuario (5) has logged in
+2011-06-21 04:33:18 Activity: User 5 created
+2011-06-21 04:33:18 Activity: User 5 created
+2011-06-21 04:48:03 Activity: Criteria "Is this a correct statement?" was added
+2011-06-21 04:50:22 Activity: Criteria "Is the claim correct?" was added
+2011-06-21 05:09:43 Activity: Document 1's content modified
+2011-06-21 05:11:15 Activity: Document 1 modified: [field: confirmado, new value: 0]
+2011-06-21 05:17:02 Activity: Document 1 modified: [field: respuesta_oficial_de_un_experto, new value: 1]
+2011-06-21 05:17:02 Activity: Document 1 modified: [field: confirmado, new value: 1]
+2011-06-21 05:17:12 Activity: Document 1 modified: [field: respuesta_oficial_de_un_experto, new value: 1]
+2011-06-21 05:17:12 Activity: Document 1 modified: [field: confirmado, new value: 1]
+2011-06-21 05:18:08 Activity: Document 1's content modified
+2011-06-21 05:18:24 Activity: Document 1 modified: [field: confirmado, new value: 1]
+2011-06-21 05:18:28 Activity: Document 1's content modified
+2011-06-21 05:18:47 Activity: Document 1's content modified
+2011-06-21 05:20:14 Activity: Document 1 modified: [field: confirmado, new value: 0]
+2011-06-21 05:20:17 Activity: Document 1 modified: [field: confirmado, new value: 0]
+2011-06-21 05:20:23 Activity: Document 1 modified: [field: confirmado, new value: 0]
+2011-06-21 05:20:30 Activity: Document 1 modified: [field: confirmado, new value: 0]
+2011-06-21 05:20:43 Activity: Document 1's content modified
+2011-06-21 05:20:52 Activity: Document 1 modified: [field: confirmado, new value: 1]
+2011-06-21 05:27:57 Activity: Document 294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:28:09 Activity: Document 294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:29:41 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:30:50 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:32:02 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:32:16 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 0]
+2011-06-21 05:32:18 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:39:41 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 0]
+2011-06-21 05:39:41 Activity: InformacionDesafio id=295 modified: [field: respuesta_oficial_de_un_experto, new value: 1]
+2011-06-21 05:39:41 Activity: InformacionDesafio id=295 modified: [field: confirmado, new value: 1]
+2011-06-21 05:39:59 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:39:59 Activity: InformacionDesafio id=295 modified: [field: confirmado, new value: 0]
+2011-06-21 05:40:25 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 0]
+2011-06-21 05:41:38 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:41:38 Activity: InformacionDesafio id=295 modified: [field: confirmado, new value: 1]
+2011-06-21 05:41:58 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 0]
+2011-06-21 05:41:58 Activity: InformacionDesafio id=295 modified: [field: confirmado, new value: 0]
+2011-06-21 05:42:10 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 1]
+2011-06-21 05:42:10 Activity: InformacionDesafio id=295 modified: [field: confirmado, new value: 1]
+2011-06-21 05:42:16 Activity: InformacionDesafio id=294 modified: [field: confirmado, new value: 0]
+2011-06-21 05:42:17 Activity: InformacionDesafio id=295 modified: [field: confirmado, new value: 0]
+2011-06-21 06:01:11 Activity: Document 1 modified: stats restarted
+2011-06-21 06:01:40 Activity: Document 1 modified: stats restarted
+2011-06-21 06:01:40 Activity: Document 1 modified: stats restarted
+2011-06-21 06:01:46 Activity: Document 1 modified: stats restarted
+2011-06-21 06:05:59 Activity: Document 31 modified: stats restarted
+2011-06-21 06:08:37 Activity: Document 31 modified: stats restarted
+2011-06-21 06:09:41 Activity: Document 31 modified: stats restarted
+2011-06-21 06:11:57 Activity: Document 31 modified: stats restarted
+2011-06-21 06:16:58 Activity: Document 31 modified: stats restarted
+2011-06-21 07:23:08 Activity: User  has searched for: [sort]

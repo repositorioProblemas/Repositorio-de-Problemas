@@ -1,0 +1,116 @@
+
+body {
+  font: helvetica,arial,freesans,clean,sans-serif;
+  background-image: url('../img/bg.jpg');
+}
+
+.header {
+  height: 85px;
+  padding: 5px 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  -moz-border-bottom-right-radius: 10px;
+  -moz-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-box-shadow: 0 0 8px 2px #ccc;
+  -webkit-box-shadow: 0 0 8px 2px #ccc;
+  box-shadow: 0 0 8px 2px #ccc;
+}
+
+.logo {
+  float: left;
+}
+
+.nav {
+  float: right;
+}
+
+.nav li {
+  display: inline;
+  list-style: none;
+  padding-left: 1em;
+  margin-left: 1em;
+  border-left:1px solid #ccc  
+}
+
+.nav li:first-child {
+  border-left:none
+}
+
+.nav.form {
+  padding-left: 10px;
+}
+
+.nav .input.text.search input {
+  border: 0;
+  border: 1px solid #ccc;
+  height: 20px;
+  border-radius: 2px;
+  padding-left: 25px;
+  background: url('../img/zoom_icon.png') 4px 2px no-repeat white;
+  /*background-position: left center;*/
+}
+
+.box {
+
+}
+
+.userbox {
+  padding-top: 0;
+}
+
+.optionsbox {
+  padding-top: 40px;
+  clear: right;
+}
+
+.optionsbox .form {
+/*  clear: right;*/
+}
+
+#bd {
+  min-height: 400px;
+  background-color: #fff;
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-radius: 10px;
+  -moz-border-bottom-right-radius: 10px;
+  -moz-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-box-shadow: 0 0 8px 2px #ccc;
+  -webkit-box-shadow: 0 0 8px 2px #ccc;
+  box-shadow: 0 0 8px 2px #ccc;
+}
+
+.content {
+  padding: 15px;
+}
+
+.footer {
+  height: 85px;
+  margin-top: 40px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  -moz-border-top-right-radius: 10px;
+  -moz-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+  -moz-box-shadow: 0 0 8px 2px #ccc;
+  -webkit-box-shadow: 0 0 8px 2px #ccc;
+  box-shadow: 0 0 8px 2px #ccc;
+}
+
+
+.home {
+  padding-top: 40px;
+  text-align: center;
+}

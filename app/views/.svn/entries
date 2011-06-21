@@ -1,0 +1,76 @@
+10
+
+dir
+630
+http://anakena.dcc.uchile.cl/svn/cc51ag1/trunk/app/views
+http://anakena.dcc.uchile.cl/svn/cc51ag1
+
+
+
+2011-06-10T06:59:57.121132Z
+541
+cc51ag1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+644679b3-65c1-4d1b-8c94-31ee2305daa4
+
+admin_usuarios
+dir
+
+admin_documentos
+dir
+
+bajar_documento
+dir
+
+desafios
+dir
+
+iniciar_sesion
+dir
+
+registro
+dir
+
+tags
+dir
+
+pages
+dir
+
+layouts
+dir
+
+subir_documento
+dir
+
+helpers
+dir
+
+criterios
+dir
+
+scaffolds
+dir
+
+usuarios
+dir
+
+elements
+dir
+
+errors
+dir
+

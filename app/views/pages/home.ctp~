@@ -1,0 +1,12 @@
+<?php $this->viewVars['title_for_layout'] = "Repositorio de Problemas y Soluciones"; ?>
+<div class="home">
+	  <?php
+	  echo $this->Form->create('Tag', array('action' => 'search'));
+      echo $this->Form->input('search', array('label' => false,));	  
+	  echo $this->Form->end('Buscar');
+	  ?> 
+	  
+	  <span style="font-size: 0.8em">Tip: Separa los términos con espacios para obtener resultados más específicos</span>
+
+</div>
+	

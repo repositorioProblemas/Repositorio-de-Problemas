@@ -1,0 +1,40 @@
+10
+
+dir
+632
+http://anakena.dcc.uchile.cl/svn/cc51ag1/trunk/app/tmp
+http://anakena.dcc.uchile.cl/svn/cc51ag1
+
+
+
+2011-06-12T21:28:45.524126Z
+632
+cc51ag1
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+644679b3-65c1-4d1b-8c94-31ee2305daa4
+
+tests
+dir
+
+cache
+dir
+
+logs
+dir
+
+sessions
+dir
+

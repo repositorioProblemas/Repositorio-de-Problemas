@@ -1,0 +1,140 @@
+﻿<?php
+/**
+ * default.ctp
+ * 
+ * layout principal del sitio
+ * 
+ * @package   views
+ * @author    Mauricio Quezada <mquezada@dcc.uchile.cl>
+ * @copyright Copyright (c) 2011 
+ */
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <?php echo $this->Html->charset(); ?>
+  <title><?php echo $title_for_layout; ?></title>
+  <?php 
+	  echo $this->Html->meta('icon');
+      //echo $this->Html->css('reset');
+      //echo $this->Html->css('style');
+      //echo $this->Html->css('tabla');
+      echo $this->Html->css('http://yui.yahooapis.com/2.9.0/build/reset-fonts-grids/reset-fonts-grids.css');
+      echo $this->Html->css('style2');
+      //Include JQuery & JQueryUI
+      echo $this->Html->script('jquery.min');
+      echo $this->Html->script('jquery-ui-1.8.13.custom.min');
+      echo $this->Html->css('jqueryui');
+
+      echo $scripts_for_layout;
+      //Include TextBoxList
+      echo $this->Html->script('GrowingInput');
+      echo $this->Html->script('TextboxList');
+      echo $this->Html->css('TextboxList');
+      echo $this->Html->script('TextboxList.Autocomplete');
+ ?>
+  <script type="text/javascript" language="javascript">
+	function add_textboxlist(selector){
+		$("" + selector).textboxlist({bitsOptions : {editable : {addKeys : [188] } }});
+	}
+
+	function add_close_button(){
+		var flash=$("#flashMessage");
+		//Create the Div
+		var div_close = $("<div></div>");
+		div_close.css({'float' : 'right', 'text-align' : 'right'});
+		//Create the A
+		var a_close = $("<a></a>");
+		a_close.css({'color' : '#333', 'cursor' : 'pointer'});
+		a_close.html("X");
+		a_close.click(close_flashMessage);
+		//Append A to Div
+		div_close.append(a_close);
+		//Append the Div to the flashMessage Div
+		flash.append(div_close);
+	}
+	
+	function close_flashMessage(){
+		$("#flashMessage").hide('slow');
+	}
+	
+	$(function(){
+		add_close_button();
+	});
+	//Convert submit buttons to JQueryUI buttons
+	$(function () {
+		$(":submit").button();
+		});
+  </script>
+</head>
+<body>
+    <div id="doc4">
+        <div id="hd">
+            <div class="header">
+                <div class="logo">
+                    <?php echo $this->Html->link($this->Html->image('logo-mock.gif'), '/', array('escape'=>false)); ?>
+                </div>
+                <div class="box userbox">
+                    <ul class="nav topmenu">
+                        <?php if(!$this->Session->check('Usuario.id')) { ?>
+                        <li><?php echo $this->Html->link('Registrarse', '/registro', array('escape' => false)); ?></li>
+                        <li><?php echo $this->Html->link('Acceder', '/iniciar_sesion', array('escape' => false)); ?></li>
+                        <?php } else {
+                            $nombre = $this->Session->read('Usuario.nombre');
+		                    $puntos = $this->Session->read('Usuario.puntos');
+                        ?>
+                        <li>Hola, <?php echo $nombre.'! ('.$puntos.' puntos)';?></li>
+                        <li><?php echo $this->Html->link('Editar perfil', '/usuarios'); ?></li>
+                        <li><?php echo $this->Html->link('Cerrar sesión', '/iniciar_sesion/logout'); ?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+                <div class="box optionsbox">
+                    <div class="nav form">
+                        <form id="TagSearchForm" method="post" action="/cc51ag1/tags/search" accept-charset="utf-8">
+                            <div style="display:none;"><input type="hidden" name="_method" value="POST"></div>
+                            <div class="input text search"><input name="data[Tag][search]" type="text" id="TagSearch"></div>
+                        </form>
+                    </div>
+                    <ul class="nav subtopmenu">
+                        <?php if($this->Session->check('Usuario.esAdmin') or $this->Session->check('Usuario.esExperto')): ?>
+	                    <li><?php echo $this->Html->link('Administrar', '/admin_documentos');?></li>
+                    	<?php endif; ?>                        
+                        <li><?php echo $this->Html->link('Ingresar documento', array('controller' => 'subir_documento', 'action' => 'index'));?></li>
+                        <li>Obtener puntos</li>
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+
+        <div id="bd">   
+            <div class="content">
+              <?php if(Configure::read('debug') > 0) { ?>
+	          <!-- debug -->
+	          <h1><a onclick="javascript:$('#debugbox').toggle()" style="cursor: pointer">Toggle Debug</a></h1>
+          	  <h1><a onclick="javascript:$('#sqlbox').toggle()" style="cursor: pointer">Toggle SQL</a></h1>
+	          <div class="debug" id="sqlbox" style="display:none">
+		        <?php echo $this->element('sql_dump'); ?>
+	          </div>
+	          <?php
+         		   echo '<div class="debug" id="debugbox" style="display:none">';
+		           $vars = $this->getVars();
+		           foreach($vars as $var) { 
+	                 pr($var); pr($$var);
+	               }
+		           echo '</div>';
+		         }
+	           ?>
+
+	          <!-- real content -->
+	          <?php echo $this->Session->flash(); ?>
+	          <?php echo $content_for_layout; ?>
+            </div>
+    	</div>
+
+        <div id="ft">
+            <div class="footer"></div>
+        </div>
+    </div>
+</body>
+</html>

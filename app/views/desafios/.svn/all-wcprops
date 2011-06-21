@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/cc51ag1/!svn/ver/541/trunk/app/views/desafios
+END
+pass.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/cc51ag1/!svn/ver/763/trunk/app/views/desafios/pass.ctp
+END
+failure.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/cc51ag1/!svn/ver/785/trunk/app/views/desafios/failure.ctp
+END

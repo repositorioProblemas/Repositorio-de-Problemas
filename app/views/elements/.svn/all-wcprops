@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/cc51ag1/!svn/ver/432/trunk/app/views/elements
+END
+paginator_info.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/cc51ag1/!svn/ver/632/trunk/app/views/elements/paginator_info.ctp
+END
+tags_autocomplete.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/cc51ag1/!svn/ver/710/trunk/app/views/elements/tags_autocomplete.ctp
+END
+menu_administrar.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/cc51ag1/!svn/ver/712/trunk/app/views/elements/menu_administrar.ctp
+END
+paginator.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/cc51ag1/!svn/ver/632/trunk/app/views/elements/paginator.ctp
+END
+flash_errors.ctp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/cc51ag1/!svn/ver/632/trunk/app/views/elements/flash_errors.ctp
+END

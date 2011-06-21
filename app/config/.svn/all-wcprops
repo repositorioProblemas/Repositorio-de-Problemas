@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/cc51ag1/!svn/ver/480/trunk/app/config
+END
+routes.php
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/cc51ag1/!svn/ver/702/trunk/app/config/routes.php
+END
+database.php
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/cc51ag1/!svn/ver/632/trunk/app/config/database.php
+END
+database.php.default
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/cc51ag1/!svn/ver/632/trunk/app/config/database.php.default
+END
+core.php
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/cc51ag1/!svn/ver/714/trunk/app/config/core.php
+END

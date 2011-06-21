@@ -1,0 +1,130 @@
+<?php
+class Criterio extends AppModel {
+	var $name = 'Criterio';
+	var $displayField = 'pregunta';
+	var $primaryKey = 'id_criterio';
+	var $validate = array(
+		'pregunta' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Ingrese una pregunta para el criterio nuevo. No puede no existir.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'respuesta_1' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Ingrese una primera respuesta factible para el criterio nuevo. No puede no existir.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'respuesta_2' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Ingrese una segunda respuesta factible para el criterio nuevo. No puede no existir.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'tamano_pack' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'El tamaño del pack debe ser un valor numérico.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'costo_pack' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'El costo de un pack (los puntos con los que se puede obtener) debe ser un valor numérico',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'costo_envio' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'El costo de enviar un documento (los puntos con los que se puede enviar) deben ser un valor numérico',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'bono_documento_enviado_validado' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'El bono obtenido por el usuario que envía un documento luego de que éste ha sido validado debe ser un valor numérico',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'funcion_penalizacion_a' => array(
+			'decimal' => array(
+				'rule' => array('numeric'),
+				'message' => 'El factor lineal de la función de penalización debe ser un valor numérico.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'funcion_penalizacion_b' => array(
+			'decimal' => array(
+				'rule' => array('numeric'),
+				'message' => 'La constante de la función de penalización debe ser un valor numérico.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'funcion_despenalizacion_a' => array(
+			'decimal' => array(
+				'rule' => array('numeric'),
+				'message' => 'El factor lineal de la función de despenalización debe ser un valor numérico.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'funcion_despenalizacion_b' => array(
+			'decimal' => array(
+				'rule' => array('numeric'),
+				'message' => 'La constante de la función de despenalización debe ser un valor numérico.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'tamano_minimo_desafio' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'El tamaño mínimo que puede alcanzar un desafío debe ser un valor numérico.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+	);
+
+}
+?>

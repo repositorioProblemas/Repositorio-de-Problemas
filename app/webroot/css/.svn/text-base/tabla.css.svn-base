@@ -1,0 +1,87 @@
+.tabla {
+	color: #7F7F7F;
+	font: 12px "Trebuchet MS",Verdana,sans-serif;
+	border-collapse: collapse;
+    margin-top: 10px;
+    margin-bottom:10px;
+}
+
+.tabla, .tabla caption {
+
+	border-right: 1px solid #CCC;
+	border-left: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
+}
+
+.tabla caption, .tabla th, .tabla td {
+	border-left: 0;
+	padding: 12px
+}
+
+.tabla caption, .tabla thead th, .tabla tfoot th, .tabla tfoot td {
+	background-color: #E63C1E;
+	color: #FFF;
+	font-weight: bold;
+	text-transform: uppercase
+}
+
+.tabla thead a{
+    color: #fff;
+}
+
+.tabla thead th {
+	background-color: #C30;
+	color: #FFB3A6;
+	text-align: left;
+}
+
+.tabla tbody th {
+    text-align:left;
+	padding: 20px 10px
+}
+
+.tabla tbody tr.odd {
+	background-color: #F7F7F7;
+	color: #666
+}
+
+
+.tabla thead a, .tabla thead a:visited{
+    color: #fff;
+}
+
+.tabla tbody a {
+	padding: 1px 2px;
+	color: #333;
+	text-decoration: none;
+	border-bottom: 1px dotted #E63C1E
+}
+
+.tabla tbody a:active, .tabla tbody a:hover,.tabla tbody a:focus, .tabla tbody a:visited {
+	/*color: #C30;*/
+}
+
+.tabla tbody tr:hover {
+	background-color: #EEE;
+	color: #333
+}
+
+.tabla tbody tr:hover a {
+/*	background-color: #FFF */
+}
+
+.tabla tbody td+td+td+td a {
+	color: #C30;
+	font-weight: bold;
+	border-bottom: 0
+}
+
+.tabla tbody td+td+td+td a:active,.tabla tbody td+td+td+td a:hover, .tabla tbody td+td+td+td a:focus, .tabla tbody td+td+td+td a:visited {
+	/*color: #E63C1E*/
+}
+
+
+.tabla tbody a:visited:after {
+	font-family: Verdana,sans-serif;
+	
+}

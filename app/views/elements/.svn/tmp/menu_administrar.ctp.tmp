@@ -1,0 +1,58 @@
+<?php
+$classes = array(
+   'v' => 'link',
+   'nv' => 'link',
+   'cr' => 'link',
+   'usr' => 'link',
+   'var' => 'link',
+);
+
+if(isset($current)) {
+  if(strcmp($current, 'no_validados') == 0) {
+	$classes['nv'] = 'current';
+  } else if(strcmp($current, 'validados') == 0) {
+	$classes['v'] = 'current';
+  } else if(strcmp($current, 'criterios') == 0) {
+	$classes['cr'] = 'current';
+  } else if(strcmp($current, 'usuarios') == 0) {
+	$classes['usr'] = 'current';
+  }else if(strcmp($current, 'variables') == 0) {
+	$classes['var'] = 'current';
+  }
+}
+?>
+<div class="admin-menu">
+<?php
+
+echo $this->Form->radio('radiomenu',
+        		array('no_validados' => 'Validar Documentos'),
+		array('value' => $current , 'onClick' => 'document.location="'.Router::url('/', true).'/admin_documentos/no_validados";'));
+echo $this->Form->radio('radiomenu',
+        		array('validados' => 'Editar doc Validados'),
+			array('value' => $current , 'onClick' => 'document.location="'.Router::url('/',true).'/admin_documentos/validados";'));
+echo $this->Form->radio('radiomenu',
+        		array('variables' => 'Configurar Variables'),
+			array('value' => $current , 'onClick' => 'document.location="'.Router::url('/',true).'/criterios/edit/1";'));
+echo $this->Form->radio('radiomenu',
+        		array('usuarios' => 'Administrar Usuarios y Roles'),
+			array('value' => $current , 'onClick' => 'document.location="'.Router::url('/',true).'/admin_usuarios/listar";'));
+/*echo $this->Html->link('Validar documentos', '/admin_documentos/no_validados', array('id' => 'menu_admin_porvalidar','class' => $classes['nv'])); ?>
+&nbsp;
+|
+&nbsp;
+<?php echo $this->Html->link('Editar doc. validados', '/admin_documentos/validados', array('id' => 'menu_admin_validados', 'class' => $classes['v'])); ?>
+&nbsp;
+|
+&nbsp;
+<?php echo $this->Html->link('Configurar Variables', '/criterios/edit/1', array('id' => 'menu_config_variables' ,'class' => $classes['var'])); ?>
+<?php if($isAdmin): ?>
+&nbsp;
+|
+&nbsp;
+<?php echo $this->Html->link('Admin. Usuarios y Roles', '/admin_usuarios/listar', array('id' => 'menu_admin_usuarios' ,'class' => $classes['usr'])); ?>
+&nbsp;
+<?php endif;*/ ?>
+</div>
+<script>
+	$(".admin-menu").buttonset();
+</script>

@@ -1,0 +1,2 @@
+1308655409
+a:4:{s:10:"id_desafio";a:5:{s:4:"type";s:7:"integer";s:4:"null";b:0;s:7:"default";N;s:6:"length";i:255;s:3:"key";s:7:"primary";}s:10:"id_usuario";a:4:{s:4:"type";s:7:"integer";s:4:"null";b:0;s:7:"default";N;s:6:"length";i:255;}s:11:"id_criterio";a:4:{s:4:"type";s:7:"integer";s:4:"null";b:0;s:7:"default";N;s:6:"length";i:255;}s:11:"c_preguntas";a:4:{s:4:"type";s:7:"integer";s:4:"null";b:0;s:7:"default";N;s:6:"length";i:11;}}

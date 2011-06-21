@@ -1,0 +1,31 @@
+
+<?php echo $this->Html->image('add_doc.png',array('class' => 'imgicon')) ; ?><h1 class="h1icon">Subir Documento</h1>
+<div class="clearicon"></div>
+
+<fieldset class="datafields">
+
+<?php echo $this->Form->create(null, array('url' => '/subir_documento/subir'));?>
+
+<?php echo $this->Form->input('Documento.titulo', array('class' => 'ingresar-documento', 'label' => 'Titulo', 'default' => 'Titulo del documento', 'size' => 50)); ?>
+
+<?php echo $this->Form->input('Documento.texto', array('class' => 'ingresar-documento', 'label' => 'Contenido del Documento', 'rows' => 14, 'cols' => 80, 'default' => 'Contenido del documento')); ?>
+
+<div style="width:400px">
+
+<?php echo $this->Form->input('Documento.tags', array('class' => 'ingresar-documento', 'size' => 100)); ?>
+     
+</div>
+<script type="text/javascript">
+	add_textboxlist("#DocumentoTags");
+</script>
+<?php echo $this->Form->end('Ingresar'); ?>
+</fieldset>
+<br />
+<div class="ui-widget">
+	<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 10px .7em;"> 
+		<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+		<strong>Hey!</strong> Puedes agregar más tags separándolos con commas (,)</p>
+	</div>
+</div>
+
+

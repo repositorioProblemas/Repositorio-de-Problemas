@@ -1,0 +1,25 @@
+a {
+	font-weight: bold;
+}
+a:link { 
+	color:#2E6E9E; 
+	text-decoration: none; 
+}
+a:visited { 
+	color:#2E6E9E; 
+	text-decoration: none; 
+}
+a:hover { 
+	color:#2E6E9E; 
+	text-decoration:underline; 
+}
+a:active { 
+	color: #e17009; 
+	text-decoration:underline; 
+}
+.nav a, #breadcrumb a {
+	font-weight: normal;
+}
+.ui-widget-header a {
+	text-decoration:underline;
+}

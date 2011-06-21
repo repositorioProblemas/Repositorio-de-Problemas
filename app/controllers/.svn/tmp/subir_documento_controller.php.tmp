@@ -1,0 +1,57 @@
+<?php
+App::import('Sanitize');
+
+class SubirDocumentoController extends AppController {
+
+  var $uses = array('Usuario', 'Documento', 'InformacionDesafio');
+  
+  function beforeFilter() {
+	if(!$this->Session->read('Desafio.passed') and !$this->Session->check('Usuario.esAdmin') and !$this->Session->check('Usuario.esExperto')) {
+	  $this->Session->setFlash('Antes de ingresar un documento, deberás pasar el siguiente desafio!');
+	  $this->Session->write('Desafio.goto', 'subir');
+	  $this->redirect(array('controller' => 'desafios', 'action' => 'pass'));
+	}
+  }
+
+  function index() { }
+
+  function subir() {
+	if(!empty($this->data)) {
+	  $this->data = Sanitize::clean($this->data);
+	  if(!is_null($this->Session->read('Usuario.id'))) {
+		$this->data['Documento']['autor'] = $this->Session->read('Usuario.id'); 
+	  } else {
+		$this->data['Documento']['autor'] = 0;
+	  }	
+	  $this->Documento->set($this->data);
+
+	  if(empty($this->data['Documento']['tags'])) {
+		$this->Session->setFlash('Debe incluir al menos un tag');
+	  } else if(!$this->Documento->validates()) {
+		$this->Session->setFlash('Hay errores en el formulario');
+	  } else if($this->Documento->saveWithTags($this->data)) {
+		$this->Session->delete('Desafio');
+						
+		// agregar puntos. De criterio Bono Documento Enviado Validado a puntos de usuario // incompleto
+		if(!($this->Session->read('Usuario.id') == 1)) {		
+			$data['Usuario']['id_usuario'] = $this->Session->read('Usuario.id');
+			$data['Usuario']['puntos'] = $this->Session->read('Usuario.puntos') + 10;
+			$this->Session->write('Usuario.puntos', $data['Usuario']['puntos']);		
+			$this->Usuario->set($data);
+		}
+		if($this->Usuario->save($data)) {
+		  $this->Session->setFlash('Documento guardado exitosamente. Has ganado 10 puntos. Gracias!');
+		} else {			
+			$this->Session->setFlash('Error al asignar los puntos');
+		}		
+	  } else {		
+	  	$this->Session->setFlash('Error al guardar el documento. Por favor, inténtelo nuevamente.');
+	  }			
+	  $this->redirect('/');	  
+	}
+	$this->redirect('index');
+  }
+
+}
+
+?>

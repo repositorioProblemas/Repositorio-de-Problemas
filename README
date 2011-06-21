@@ -1,0 +1,5 @@
+Modificar 
+- app/config/core.php
+  - habilitar htaccess y agregar los archivos en /, /app/ y en /app/webroot/
+- app/config/database.php
+  - db config

@@ -1,0 +1,233 @@
+﻿<!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+<script type="text/javascript">	
+	$(document).ready(function() {		
+		$("#select-all").click(function() {
+			var checked = this.checked;
+			$(".adm-checkbox-form").each(function() {
+				this.checked = checked;
+				update_checked($(this));
+			}).button("refresh");
+		});
+		
+		$("#adm-mass-reset").click(function(e) {			
+			 e.preventDefault();
+			 $("#ActionMassAction").val("reset");
+			 var form = $(this).parent("form");
+			 var ok = confirm("Are you sure to reset stats of selected documents?");
+			 if(ok)
+			 	form.submit();			 
+		});
+		$("#adm-mass-validate").click(function(e) {			
+			 e.preventDefault();
+			 $("#ActionMassAction").val("validate");
+			 var form = $(this).parent("form");
+			 var ok = confirm("Are you sure to (in)validate the selected documents?");
+			 if(ok)
+			 	form.submit();			 
+		});
+		$("#adm-mass-delete").click(function(e) {			
+			 e.preventDefault();
+			 $("#ActionMassAction").val("delete");
+			 var form = $(this).parent("form");
+			 var ok = confirm("Are you sure to delete selected documents?");
+			 if(ok)
+			 	form.submit();			 
+		});
+
+		//Add Style the checkboxes
+		$("#select-all, .adm-checkbox-form").button({icons: {
+		                primary: "ui-icon-check"
+				            }, text: false}).addClass("adm-checkbox-form");
+		//Add Hover functions to rows
+		$("#tabla_documentos tbody tr").hover(hover_tr, hover_tr_out);
+		$('#tabla_documentos tbody :checkbox').click(function() {
+		      							update_checked($(this));
+		      						});
+	});
+
+	function hover_tr(){
+		$(this).addClass("table-hover");
+	}
+	
+	function hover_tr_out(){
+		$(this).removeClass("table-hover");
+	}
+
+	function update_checked(item){	
+		if(item.attr("checked"))	
+			item.parent().parent().parent().addClass('table-hover-checked');
+		else
+			item.parent().parent().parent().removeClass('table-hover-checked');
+	}
+</script>
+<?php
+	$en_valid = (strcmp($current,'no_validados') == 0) ? false : true; 
+
+	if(!$en_valid) {
+		$title = 'Pending validation documents';
+	} else {
+		$title = 'Validated Documents';
+	}
+	if(!$en_valid)
+		$rest = 'no_validado';
+	else
+		$rest = 'como_desafio';
+
+	$this->viewVars['title_for_layout'] = "Administer $title";
+	//echo $this->Html->script('piecharts');
+	
+	/* breadcrumbs */
+	$this->Html->addCrumb('Manage', '/manage/');
+	$this->Html->addCrumb($title);
+	/* end breadcrumbs */ 
+	 
+	function porcentaje($q,$tot) {
+		if($tot == 0)
+			return 0;
+		  return 100*$q/($tot);
+		}
+	function consenso($a,$b){
+		if(($a + $b) == 0)
+		  return 0;
+		return 100*abs($a-$b)/($a+$b);
+	}
+?> 
+
+<?php echo $this->Html->image('admin.png',array('class' => 'imgicon')) ; ?><h1 class="h1icon"><?php echo $title; ?></h1>
+<div class="clearicon"></div>
+<?php echo 
+	   $this->element('menu_administrar', array(
+		 'isLogged' => $this->Session->check('Usuario.id'), 
+		 'isAdmin' => $this->Session->check('Usuario.esAdmin'),
+         'current' => $current
+	   ));       
+?> 
+<br/>
+
+
+<!-- <div style="float:left; text-align:right;width:30%">
+	<?php echo $this->Html->link('Agregar Nuevo Documento...', array('action' => 'add'), array('class' => 'link')); ?>
+</div>-->
+<div style="clear:both"></div>
+
+<!-- expert tools -->
+<div id="expert-tools">
+	<!-- number of documents -->
+	<div class="adm-limit">
+		<?php echo $this->Form->create(null, array('url' => '/admin_documentos/'.$current, 'name' => 'select_limit')); ?>
+		<span class="adm-opt">Show: </span>
+		<?php			 
+			$options = array(
+				'5' => '5 documents',
+				'10' => '10 documents',
+				'20' => '20 documents',
+				'50' => '50 documents' 
+			);
+			echo $this->Form->select('Documento.limit', $options, $limit, array('empty' => false, 'onChange' => 'select_limit.submit()'));			   
+		?>
+		</form>
+	</div>
+
+	<!-- select criteria -->
+	<div class="adm-criteria">
+		<?php echo $this->Form->create(null, array('url' => '/admin_documentos/'.$current, 'name' => 'select_criterio')); ?>
+		<span class="adm-opt">Criteria: </span>
+		<?php			 
+			echo $this->Form->select('pregunta', $criterio_list, $criterio_n, array('empty' => false, 'onChange' => 'select_criterio.submit()'));			   
+		?>
+		</form>
+	</div>
+	<!-- end select criteria -->
+			
+	<!-- mass edit -->
+	<div class="adm-mass">
+	<?php echo $this->Form->create(null, array('id' => 'adm-process', 'url' => '/admin_documentos/mass_edit')); ?>	
+		<span class="adm-opt">Selected Documents: </span>
+		<?php		
+			echo $this->Form->hidden('Action.mass_action');
+			echo '&nbsp;&nbsp;&nbsp;';
+			echo $this->Form->button('Reset stats', array('id' => 'adm-mass-reset'));
+			echo '&nbsp;&nbsp;&nbsp;';
+			echo $this->Form->button(($en_valid ? 'Inv' : 'V' ). 'alidate', array('id' => 'adm-mass-validate'));
+			echo '&nbsp;&nbsp;&nbsp;';
+			echo $this->Form->button('Delete', array('id' => 'adm-mass-delete'));
+		?>
+	</div>
+	<!-- end mass edit-->	
+</div>
+<!-- end expert tools -->
+
+<!-- core table -->
+<table id="tabla_documentos" class="ui-widget ui-widget-content tabla" style="width: 100%">
+  <thead>
+	<tr class="ui-widget-header">
+	  <th width="10" style="text-align:center;font-size:9px"><input type="checkbox" id="select-all" /><label for="select-all">select</label></th> 
+	  <th width="550"><?php echo $this->Paginator->sort('Document', 'Documento.titulo'); ?></th>
+	  <th width="220"><?php echo $this->Paginator->sort('Statistics', "InformacionDesafio.total_respuestas_2_{$rest}"); ?></th>
+	  <th width="100">Options</th>
+	</tr>
+  </thead>
+  <tbody>
+  <?php 
+  	$i = 0;
+  	foreach($data as $d):  
+  		$id = $d['Documento']['id_documento'];  	
+  ?>
+	<tr>
+		<td><div class="adm-checkbox" style="font-size:9px"><?php echo $this->Form->checkbox('Documento.'.$i.'.id_documento', array('value' => $id, 'class' => 'adm-checkbox-form')); 
+						    echo "<label for='Documento".$i."IdDocumento'>check</label>"; ?></div></td>
+		<td>
+			<!-- doc -->
+			<span class="admin-doc-titulo">
+				<?php echo $this->Html->link($d['Documento']['titulo'], array('action' => 'view', $id), array('escape' => false)) ;?>
+			</span>
+			<div class="admin-doc-texto">
+				<?php echo $this->Text->truncate(str_replace('\n', '<br />', $d['Documento']['texto']), 350, array('ending' => '...', 'exact' => false, 'html' => true)); ?>
+			</div>
+			<div class="admin-doc-creado">
+				Creado el <?php echo $d['Documento']['created']; ?> por usuario <?php echo $d['Documento']['autor']; ?>. 
+			</div>
+		</td>
+		<td>
+			<!-- consenso -->
+			<?php				
+				// convencion............. 1 = no, 2 = si
+				$no = $d['InformacionDesafio']["total_respuestas_1_{$rest}"];
+				$si = $d['InformacionDesafio']["total_respuestas_2_{$rest}"];
+				$tot = $no + $si;
+				
+				$pno = porcentaje($no, $tot);
+				$psi = porcentaje($si, $tot);				
+			?>
+			<div style="width: 95%; clear:both; margin: 0 auto; height: 2em">
+				<div style="float:left;"><?php echo 'Yes ('.$this->Number->precision($psi, 1).'%)'; ?></div>
+				<div style="float:right;"><?php echo 'No ('.$this->Number->precision($pno, 1).'%)'; ?></div>				
+			</div>			
+			<div class="progressbar-doc-<?php echo $id; ?>" style="width: 95%; margin: 0 auto;"></div>
+			<script>$('.progressbar-doc-<?php echo $id; ?>').progressbar({value: <?php echo $psi; ?>});</script>
+		</td>
+		<td>
+			<!-- options -->
+			<div class="admin-doc-edit">
+				<?php echo $this->Html->link('Edit', array('action' => 'edit', $id)); ?>
+				&nbsp; | &nbsp;   
+				<?php echo $this->Html->link('Remove', array('action' => 'remove', $id), array(), "Está seguro de borrar este documento?"); ?>
+			</div>
+			<?php //echo $this->element('acciones_experto', array('stats' => $d['InformacionDesafio'], 'criterio' => $criterio['Criterio'])); ?>
+			<?php //echo $this->element('estadisticas', array('stats' => $d['InformacionDesafio'], 'criterio' => $criterio['Criterio'], 'doc_id' => $id)); ?> 
+		</td>
+	</tr>  
+  <?php 
+  	$i += 1;
+  	endforeach; 
+  ?>
+  </tbody>
+</table>
+<!-- end core table -->
+</form>
+<?php echo $this->element('paginator_info'); ?>
+
+<?php echo $this->element('paginator'); ?> 
+	
+
+ 

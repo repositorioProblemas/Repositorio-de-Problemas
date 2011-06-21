@@ -1,0 +1,236 @@
+<?php
+/**
+ * admin_documentos.php
+ * 
+ * CRUD sobre documentos
+ * 
+ * @package   controllers
+ * @author    Mauricio Quezada <mquezada@dcc.uchile.cl>
+ * @copyright Copyright (c) 2011 
+ */
+
+App::import('Sanitize');
+class AdminDocumentosController extends AppController {
+  
+  var $uses = array('Criterio', 'Documento', 'InformacionDesafio', 'Tag', 'Usuario');
+  var $helpers = array('Text', 'Number');
+  var $paginate = array(
+	'InformacionDesafio' => array(
+	  'limit' => 5,
+	  'order' => array(
+		'Documento.created' => 'desc'
+	  )
+	)
+  );
+
+  function beforeFilter() {
+	if(!$this->Session->check('Usuario.esExperto') && !$this->Session->check('Usuario.esAdmin')) {
+	  $this->Session->setFlash('Usted no tiene permisos para acceder a esta página');
+	  $this->redirect(array('controller' => 'pages'));
+	}
+  }
+
+  function index() {
+	$this->redirect(array('action'=>'validados'));
+  }
+  
+  function _beforeList($confirmado) {
+  	$criterio_list = $this->Criterio->find('list');
+  	$criterio_n = 1;  	
+  	if(!empty($this->data)) {
+  		if(!empty($this->data['Criterio']['pregunta']))
+  			$criterio_n = $this->data['Criterio']['pregunta'];
+  		if(!empty($this->data['Documento']['limit']))
+  			$this->paginate['InformacionDesafio']['limit'] = $this->data['Documento']['limit']; 
+  	}
+  	$data = $this->paginate('InformacionDesafio', array(
+	  'InformacionDesafio.id_criterio' => $criterio_n,
+	  'InformacionDesafio.confirmado' => $confirmado
+	));
+	return compact('criterio_list', 'criterio_n', 'data');
+  }
+  
+  function validados() {
+  	$d = $this->_beforeList(1);
+	$current = 'validados';
+	$criterio_n = $d['criterio_n'];
+	$criterio_list = $d['criterio_list'];
+	$data = $d['data'];	
+	$limit = $this->paginate['InformacionDesafio']['limit'];
+	$this->set(compact('criterio_n', 'criterio_list', 'data', 'current', 'limit'));
+	$this->render('listar');
+  }
+
+  function no_validados() {	
+	$d = $this->_beforeList(0);
+	$current = 'no_validados';
+	$criterio_n = $d['criterio_n'];
+	$criterio_list = $d['criterio_list'];
+	$data = $d['data'];
+	$limit = $this->paginate['InformacionDesafio']['limit'];
+	$this->set(compact('criterio_n', 'criterio_list', 'data', 'current', 'limit'));
+	$this->render('listar');
+  }	
+
+  
+  function add() {
+	$this->redirect('/subir_documento');
+  }
+  
+  function edit($id = null, $criterio = 1) {	
+	if(empty($this->data)) {
+	  $this->data = $this->InformacionDesafio->find(
+		'first',
+		array(
+			'conditions' => array(
+				'InformacionDesafio.id_documento' => $id,
+				'InformacionDesafio.id_criterio' => $criterio
+			)
+		));
+	  $this->set('data',$this->data);
+	  $raw_tags = $this->Tag->find('all', array('conditions' => array('Tag.id_documento' => $id), 'recursive' => -1));
+	  $tags = array();	  
+	  foreach($raw_tags as $t)
+		$tags[] = $t['Tag']['tag'];
+	  
+	  $this->data['Documento']['tags'] = implode($tags,', ');
+	  
+	  $raw_user = $this->Usuario->find('first', array('conditions' => array('Usuario.id_usuario' => $this->data['Documento']['autor']), 'recursive' => -1));
+	  $this->data['Usuario']['autor'] = $raw_user['Usuario']['nombre'] . ' '. $raw_user['Usuario']['apellido'] . ' ('.$raw_user['Usuario']['email'].')';
+	  $criterios_list = $this->Criterio->find('list');
+	  $criterios_n = $criterio;
+	  $this->set(compact('criterios_list', 'criterios_n'));
+	  
+	} else {	  
+	  /*
+	   $this->Tag->deleteAll(array('Tag.id_documento' => $id));
+	  $this->data['Documento']['id_documento'] = $id;
+	  if ($this->Documento->saveWithTags($this->data)) {
+		$this->Session->setFlash('Documento modificado exitosamente');
+		$this->redirect($this->referer());
+	  }
+	   */
+	}
+  }
+  
+  function edit_select_criteria($doc_id = null) {
+  	if(!is_null($doc_id) and !empty($this->data)) {
+  		$this->redirect(array('action' => 'edit/'.$doc_id.'/'.$this->data['Criterio']['pregunta']));
+  	}
+  	$this->redirect($this->referer());
+  }
+
+  function view($id = null) {
+  	$this->redirect(array('action' => 'edit/'.$id));
+	/*
+	if (is_null($id)) {
+	  $this->redirect(array('action' => 'index'));
+	} else {
+	  $documento = $this->Documento->read(null, $id);
+	  if(!empty($documento))
+		$this->set(compact('documento'));
+	  else
+		$this->redirect(array('action' => 'index'));
+	}
+	*/
+  }
+
+  function remove($id = null, $redirect = true, $flash = true) {
+	if (!is_null($id)) {
+	  if($this->Documento->delete($id)) {
+		if($flash) $this->Session->setFlash('Documento '.$id.' eliminado');	
+	  } else {
+		if($flash) $this->Session->setFlash('Hubo un error al eliminar el documento');
+	  }
+	}
+   	if($redirect) $this->redirect($this->referer());	
+  }
+
+  /* InformacionDesafio */
+  function set_field($field = null, $id = null, $bool = null, $redirect = true) {
+	if(!is_null($field) and !is_null($id) and !is_null($bool)) {
+	  
+	  /* blacklist */
+	  if(in_array($field, array('id_estadisticas', 'id_documento'))) {
+		if($redirect) $this->redirect($this->referer());
+	  }
+
+	  /* special case 
+	  if(strcmp($field, 'confirmado') == 0) {
+		$entry = $this->InformacionDesafio->read('respuesta_oficial_de_un_experto',$id);
+		if(is_null($entry['InformacionDesafio']['respuesta_oficial_de_un_experto'])) {
+		  $this->Session->setFlash('Antes de validar un documento debes dar su respuesta oficial');
+		  if($redirect) $this->redirect($this->referer());
+		}
+	  }
+	  */
+	  
+	  $this->InformacionDesafio->set(array(
+		'id_estadisticas' => $id,
+		$field => $bool
+	  ));
+	  
+	  if(!$this->InformacionDesafio->save())
+		return false;
+	}	
+	if($redirect) $this->redirect($this->referer());
+  }
+
+  function _reset_stats($id = null) {
+	if(!is_null($id)) {
+	  $this->InformacionDesafio->id = $id;	  
+	  $data = array(
+		  'total_respuestas_1_como_desafio' => 0,
+		  'total_respuestas_2_como_desafio' => 0,
+		);	
+	  $this->InformacionDesafio->set($data);	  
+	  if(!$this->InformacionDesafio->save($data)) {
+	  	return false;
+	  }
+	}
+	return true;
+  }
+  
+  function mass_edit() {
+  	if(!empty($this->data)) {
+  		
+  		/* reset stats */
+  		if(strcmp($this->data['Action']['mass_action'], 'reset') == 0) {
+  			foreach($this->data['Documento'] as $d) {
+  				$id = $d['id_documento'];	
+  				$this->_reset_stats($id);  			 
+  			}
+  			$this->Session->setFlash('Documents\' statistics restarted successfully');
+  			
+  		/* validate docs */
+  		} else if(strcmp($this->data['Action']['mass_action'], 'validate') == 0) {
+  			foreach($this->data['Documento'] as $d) {
+  				$id = $d['id_documento'];  				
+  				$doc = $this->InformacionDesafio->findByIdDocumento($id, array('respuesta_oficial_de_un_experto', 'confirmado'));
+  				
+  				// set respuesta_oficial to 1 if not set  				  				
+  				if(is_null($doc['InformacionDesafio']['respuesta_oficial_de_un_experto'])) {
+  					$this->set_field('respuesta_oficial_de_un_experto', $id, 1, false);
+  				}  					
+  				$this->set_field('confirmado',$id, ($doc['InformacionDesafio']['confirmado']+1)%2, false);
+  			}
+  			$this->Session->setFlash('Documents changed successfully');
+  			
+  		/* delete docs */
+  		} else if(strcmp($this->data['Action']['mass_action'], 'delete') == 0) {
+  			foreach($this->data['Documento'] as $d) {
+  				$id = $d['id_documento'];
+  				$this->remove($id, false, false);
+  			}  			
+  			$this->Session->setFlash('Documents removed successfully');
+  			
+  		/* default */
+  		} else {
+  			$this->Session->setFlash('Didn\'t do anything. Maybe you picked a wrong option');
+  		}  		
+  	}
+  		
+  	$this->redirect($this->referer());
+  }
+}
+?>

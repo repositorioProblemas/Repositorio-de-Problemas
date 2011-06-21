@@ -1,0 +1,252 @@
+* TODO Modulos / Controladores
+
+ - [X] Inicio de sesion
+   =MD0001=	 *Inicio de Sesión*
+
+   =Funciones= El objetivo de este módulo es iniciar sesión en el sistema. 
+   Debe ingresarse el e-mail registrado, así como su contraseña asociada 
+   (y , en la segunda iteración, el contexto en el que se quiere iniciar). 
+   El sistema valida esta información y conduce al usuario a una interfaz
+   dentro del sistema. Si es un administrador o un experto, lo conduce
+   directamente a una de las interfaces de administración de documentos
+   ("Documentos por Confirmar" o "Documentos confirmados"). En caso de 
+   ser un usuario común, lo conduce de regreso a la interfaz de búsqueda 
+   de documentos.
+   
+   Como medida básica de seguridad, no deben almacenarse las contraseñas
+   de los usuarios en el sistema como texto plano.
+   
+   =Entradas= e-mail del usuario y contraseña. En la segunda iteración, 
+   dominio de datos.
+   
+   =Salida= Una cookie en el sistema que marque la sesión actual, y que
+   permita recuperar la identidad del usuario a los otros módulos 
+   mientras no se cierre la sesión.
+   
+   
+ - [X] Registro de usuario
+   =MD0011=	 *Registro de usuarios nuevos*
+
+   =Funciones= Permite que cualquier persona registre sus datos en 
+   el sistema y así pueda acumular puntos y poseer un tamaño de
+   desafíos propio, el que varía según su desempeño en cuanto a
+   desafíos correctos/incorrectos respondidos.
+
+   =Entradas= e-mail del usuario, contraseña, nombre, apellidos.
+
+   =Salidas= Un registro en el modelo de datos de un nuevo usuario,
+   sin puntos previos. La cantidad de preguntas a responder por cada
+   desafío, dado que es distinta para cada criterio,es inicializada
+   la primera vez que se le consulte por aquél criterio (En la primera
+   iteración se puede inicializar al crear el usuario, dado que existe
+   un único criterio conocido). Debe además iniciarse la sesión del
+   usuario registrado.
+   
+   
+ - [ ] Administracion de usuarios y roles
+   =MD0002=	 *Administración de Usuarios y Roles*
+ 
+   =Funciones= Permite al administrador acceder al registro de
+   todos los usuarios del sistema. Puede eliminar, modificar o
+   crear nuevos usuarios. Asimismo, puede asignarles el rol de
+   administrador (y en la primera iteración, de experto. Se
+   sugiere que en la segunda iteración la asignación de los
+   expertos se realice en la interfaz de administración de 
+   criterios). Al acceder a los detalles del usuario, el
+   administrador puede ver o cambiar el total de puntos que
+   posee, y la cantidad de preguntas por desafío para cada
+   criterio que tiene el usuario en particular.
+ 
+   =Entradas= Sesión Iniciada como usuario con los permisos de
+   administrador.
+
+   =Salidas= (en caso de haberlas) modificaciones en la tabla
+   "Usuarios" del modelo de datos. (y, en la primera iteración,
+   en la tabla "Expertos").
+   
+   
+ - [ ] Administracion de documentos
+   *A continuación se describen dos módulos complementarios para
+   ser utilizados por los Expertos del sistema (MD0006 y MD0007).* 
+
+   Se desea minimizar la curva de aprendizaje, por lo que los módulos
+   son casi idénticos, salvo el conjunto de documentos al que se
+   refieren. Sus funciones son las siguientes: 
+  
+   Realizar operaciones CRUD sobre los documentos, 
+   mostrar las estadísticas del sistema 
+   y mover los documentos entre los tres conjuntos
+   disponibles: No validados, Validados y “Validados y 
+   utilizables como desafío”. 
+
+   La única razón por la que se mantienen separados es para reforzar
+   la imagen de conjuntos disjuntos entre no-validados y validados, 
+   haciendo que al “marcar un documento como perteneciente al conjunto
+   complementario”, sea visible una diferencia en el sistema presentado
+   al usuario. Es factible la implementación de ambos módulos como uno
+   solo, parametrizado por el conjunto de pertenencia.  Asimismo se
+   presenta la opción de ordenar en cada módulo los documentos
+   (En la primera iteración, según el filtro y los dos ordenes acordados
+   con el cliente: Documentos con una cantidad de respuestas mayor a N,
+   y ordenados por: 
+   a) cantidad de respuestas si - cantidad de respuestas no  o
+   b) (- a). En la segunda iteración, se ordenan mediante un 
+   mini-intérprete que procesa el filtro y el orden que se aplica a los
+   documentos). Asimismo pueden, para un documento particular, volverse
+   a 0 las estadísticas almacenadas en cuanto a las respuestas a los
+   desafíos. (ya sea como “documento no validado” o como
+   “documento utilizable como desafío”).
+ 
+   =MD0006=	 *Confirmación de documentos*
+
+   =Entradas= El conjunto de documentos no-validados.
+ 
+   =Salidas= El conjunto de documentos no-validados actualizado, según 
+   las selecciones que realice el experto en cuanto a marcar documentos
+   como validados (y “utilizables como desafío”). 
+ 
+   =MD0007=	 *Edición de documentos confirmados*
+ 
+   =Entradas= El conjunto de documentos ya validados.
+ 
+   =Salidas= El conjunto de documentos ya validados actualizado, según
+   las selecciones que realice el experto en cuanto a devolver
+   documentos al conjunto de los no-validados o marcar documentos como
+   “utilizables como desafío”.
+   
+
+ - [ ] Ingreso de nuevos documentos
+   =MD0004=	 *Ingreso de nuevos documentos*
+ 
+   =Funciones= Debe permitir a un usuario registrado subir un
+   documento al sistema. Para ello el usuario ingresa un título,
+   el texto plano y un conjunto de tags para el documento, por 
+   los que podrá ser posteriormente buscado. Automáticamente el
+   sistema agrega el autor y la fecha de creación al documento.
+   El dominio del documento se inferirá por el contexto del
+   inicio de sesión.
+ 
+   Para poder subir el documento, se solicitará al =MD0003= la
+   generación de un desafío que permitirá validar el interés del
+   usuario en subir el documento (por la promesa de puntaje futuro
+   en caso de que su documento sea validado).
+ 
+   =Entradas= Sesión Iniciada, Título, Cuerpo de un documento y Tags.
+
+   =Salida= Inserción en la tabla Documento. Además de la generación
+   de datos para todos los criterios disponibles en el momento en la
+   tabla Información_Desafíos. (El comportamiento para modificaciones
+   en los criterios se especificará más adelante en esta sección).
+   
+
+ - [ ] Generador de desafios
+   =MD0003=	 *Generador de Desafíos*
+ 
+   =Funciones= este modulo debe generar un desafío para el usuario, 
+   consistente en una cantidad c de preguntas elegidas aleatoriamente 
+   dentro un dominio particular. Se debe verificar la respuesta del
+   usuario. Si es correcta, se deben asignar al usuario los puntos
+   correspondientes al tamaño de un pack de respuestas para el criterio
+   seleccionado. En caso de ser incorrecto, se debe presentar un nuevo
+   desafío.
+ 
+   =Entradas= Usuario, dominio, criterio (el criterio se elegirá de
+   forma round-robin sobre los criterios disponibles en el sistema). 
+   A partir del usuario se pueden obtener 3 valores necesarios: 
+   
+   1. El tamaño del desafío para el criterio especificado 2 y 3.
+   Las funciones de penalización y despenalización para actualizar    
+   el tamaño de desafío del usuario para el criterio, según si respondió
+   correcta o incorrectamente el desafío.
+ 
+   =Salidas= Actualización de los siguientes valores de usuario: 
+   Puntos obtenidos, y Valor de tamaño de desafío para el criterio.
+
+
+ - [ ] Busqueda
+   =MD0005=	 *Búsqueda de Documentos*
+ 
+   =Funciones= Se presenta una vista que permite al usuario ingresar 
+   palabras clave (tags) por los cuales buscar documentos en el sistema.
+   Se genera con ello una "Transacción de búsqueda". La transacción 
+   consistirá en los siguientes pasos.
+ 
+   1. Búsqueda de los documentos correspondientes al dominio que contienen
+      las palabras clave, y sobre un criterio particular.
+   2. Notificación al usuario de la cantidad de documentos validados 
+      disponibles.
+   3. Se verifica si el puntaje que posee el usuario es suficiente para
+      la entrega de un pack de documentos en el criterio. En caso positivo
+      se procede al paso 5.
+   4. Solicitud al módulo MD0003 de un desafío para obtener puntos. Sólo 
+      se pasará al siguiente paso cuando el usuario tenga los puntos
+      necesarios para "rescatar" un pack de documentos del sistema. Se 
+      actualiza la información del usuario.
+   5. Se entregará, como respuesta, un pack de documentos. Dado el tamaño
+      especificado previamente en las características del criterio
+      especificado en el paso (1), se eligen aleatoriamente entre los
+      documentos disponibles aquella cantidad de documentos. El sistema
+      despliega los documentos en la página web, junto con su validación 
+      y además permite la descarga de los documentos.
+ 
+   =Entradas= Palabras clave a buscar, Criterio sobre el que se desea
+   obtener documentos validados y Dominio correspondiente.
+ 
+   =Salidas= En caso de obtener el puntaje necesario, un conjunto de
+   documentos validados que contienen las palabras clave y pertenecen
+   al dominio solicitado.
+
+
+ - [ ] Otros
+   =MD0009=	 *Inicialización de sistema*
+ 
+   =Funciones= El objetivo de este módulo es desplegar un sistema
+   funcional a partir de una base de datos vacía. Luego de accesar
+   al sistema, se desea que se generen automáticamente las tablas
+   del modelo de datos. Asimismo, debe crearse un usuario
+   administrador predeterminado (admin, contraseña admin), que posee
+   todos los permisos para utilizar el sistema. Luego de inicializada
+   la base de datos, el administrador debe agregar un Dominio, un
+   criterio de evaluación nuevo y un conjunto de documentos validados, 
+   utilizando las interfaces ya disponibles en el sistema. Con ello
+   se puede “reiniciar” el sistema, proveyendo las funcionalidades
+   deseadas mínimas.
+ 
+   =Entradas= Un sistema “en pañales”, con base de datos vacía, que no
+   funciona.
+ 
+   =Salidas= Un sistema preparado para ser inicializado por el
+   administrador “admin/admin”.
+
+   =MD0012=	 *Modulo de registro de modificaciones en el sistema*
+ 
+   =Funciones= Se desea mantener un registro o log de las operaciones
+   realizadas en el sistema, asociándoles usuario que las realizó y
+   la hora y fecha de la modificación. Este registro puede ser
+   “reiniciado” por un administrador, borrando la información 
+   previamente existente para disminuir el consumo de almacenamiento
+   del sistema.
+ 
+   =Entradas= Todas las operaciones realizadas sobre el sistema, junto
+   al usuario que la realizó y la hora.
+ 
+   =Salidas= La historia de modificaciones del sistema a partir de un
+   momento particular.
+
+
+ - [ ] Para la segunda iteracion
+   MD0010	 Administración de Dominios (Segunda Iteración)
+   
+   Funciones Se desea poder clasificar los documentos por áreas del conocimiento al que aplican (funcionalidad que llamaremos “dominio”), por ejemplo “ciencias de la computación”, “cocina”, “idiomas”, etc. Para simplificar su funcionamiento, un usuario, al iniciar sesión, ingresará además a un “dominio” particular. (Los usuarios serán compartidos para todos los dominios, pero las “sesiones” individuales no. Se puede ofrecer la funcionalidad de cambiar de dominio sin salir de la sesión, pero no es crítico.) Los administradores serán los encargados de realizar las operaciones CRUD sobre los dominios, así como asignar “Domain Expertise” a cada Experto según sus cualidades. Al agregar un dominio, debe asignarse en él al menos un criterio de calidad y un conjunto de documentos validados suficientes para permitir la generación de desafíos.
+ 
+   Entradas Conjunto previo de dominios en el sistema.
+ 
+   Salidas Conjunto actualizado de dominios en el sistema.
+
+   MD0008	 Administrador de criterios (Segunda Iteración)
+ 
+   Funciones El módulo de administración de criterios permite al experto y al administrador crear, modificar y eliminar criterios de calidad que serán utilizados para calificar los documentos existentes en la base de datos. En caso de ser agregado un criterio, debe modificarse la tabla de datos información_desafío, agregándose filas para todos los documentos previamente existentes en el dominio.
+ 
+   Entradas El conjunto de criterios existente y un usuario con permisos para editarlo.
+ 
+   Salidas El conjunto de criterios actualizado.

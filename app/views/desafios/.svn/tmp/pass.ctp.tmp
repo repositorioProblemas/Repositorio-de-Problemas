@@ -1,0 +1,61 @@
+﻿<?php echo $this->Html->image('math.png',array('class' => 'imgicon')) ; ?>
+
+<h1 class="h1icon">  
+	Responder Desafío
+</h1>
+
+<br/><br/><br/><br/><br/>
+
+<<<<<<< .copia-de-trabajo
+<div><i>Utilizando diez de tus puntos, puedes saltar el desaf&iacute;o d&aacute;ndole al bot&oacute;n.
+<?php
+echo $this->Html->link('Boton', '/subir_documento')
+?>
+=======
+<div class="ui-widget">
+	<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 10px .7em;"> 
+		<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+		<strong>Hey!</strong> You can avoid doing this challenge expending ten points! Just click to Continue button.</p>
+	</div>
+</div>
+>>>>>>> .derecha-fusion.r631
+
+</i></div>
+
+<!-- <div class="clearicon"></div> -->
+<!--<span class="info">Para obtener un pack de <?php echo $criterio['Criterio']['tamano_pack']; ?> 
+documentos, deberás contestar correctamente este desafío</span>-->
+
+<?php
+$i = 0; 
+echo $this->Form->create(null, array('url' => '/desafios/procesar'));
+foreach($documentos as $d) : 
+?>
+
+<div class="desafio-contenido"> 
+  <div class="titulo"><?php echo $d['titulo']; ?></div>
+  <div class="texto"><?php echo stripslashes(str_replace('\n', '<br />', $d['texto'])); ?></div>
+  <div class="desafio-pregunta">
+  <?php
+	 $options = array(
+	   '1' => $criterio['Criterio']['respuesta_1'],
+       '2' => $criterio['Criterio']['respuesta_2']);  	
+     $attr = array(
+       'legend' => $criterio['Criterio']['pregunta'],
+  	   'label' => false,
+       'separator' => '&nbsp;');
+	 echo $this->Form->radio('Desafio.'.$i.'.respuesta', $options, $attr);
+     echo $this->Form->hidden('Desafio.'.$i.'.id_criterio', array('value' => $criterio['Criterio']['id_criterio']));
+     echo $this->Form->hidden('Desafio.'.$i.'.id_documento', array('value' => $d['id_documento']));
+     $i++;
+  ?>
+  </div>
+
+</div>
+
+
+<?php 
+endforeach; 
+echo $this->Form->end('Next');
+?>
+
